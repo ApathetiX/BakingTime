@@ -68,7 +68,7 @@ public class StepMasterListActivity extends AppCompatActivity implements MyInter
 
     @Override
     public void handleClick(int position) {
-        if (mTabletMode) {
+        if (isTablet() && mStepDetailFragment != null) {
             replaceFragment(position);
         } else {
             launchStepDetailActivity(position);
