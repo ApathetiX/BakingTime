@@ -28,7 +28,7 @@ public class StepMasterListActivity extends AppCompatActivity implements MyInter
     private StepDetailFragment mStepDetailFragment;
     private int mStepId;
     private Step mStep;
-    private MyInterface mListener;
+    private StepListFragment mStepListFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,21 +43,30 @@ public class StepMasterListActivity extends AppCompatActivity implements MyInter
         Bundle bundle = new Bundle();
         bundle.putParcelable(PARCEL_KEY, mRecipe);
 
-        StepListFragment stepListFragment = new StepListFragment().newInstance(this);
-        stepListFragment.setArguments(bundle);
+        mStepListFragment = new StepListFragment();
+        mStepListFragment.setArguments(bundle);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.master_step_list_container, stepListFragment)
+                .add(R.id.master_step_list_container, mStepListFragment)
                 .commit();
 
         if(findViewById(R.id.step_detail_container)!= null){
             mTabletMode = true;
+            mStepListFragment = new StepListFragment().newInstance(this);
+            mStepListFragment.setArguments(bundle);
+
+            fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.master_step_list_container, mStepListFragment)
+                    .commit();
+
             mStepDetailFragment = new StepDetailFragment();
             Bundle args = new Bundle();
             mStepsList = mRecipe.getStepsList();
             mStep = mStepsList.get(0);
             mStepId = mStep.getId();
+
             args.putParcelableArrayList(STEP_LIST_PARCEL_KEY, mStepsList);
             args.putParcelable(STEP_PARCEL_KEY, mStep);
             mStepDetailFragment.setArguments(args);
@@ -82,15 +91,11 @@ public class StepMasterListActivity extends AppCompatActivity implements MyInter
         startActivity(detailIntent);
     }
 
-
     public boolean isTablet() {
         return mTabletMode;
     }
 
     private void replaceFragment(int position) {
-        if (position != mStepId) {
-            position = mStepId;
-        }
         Log.i("tab", "replace");
         Bundle args = new Bundle();
         args.putParcelableArrayList(STEP_LIST_PARCEL_KEY, mStepsList);
