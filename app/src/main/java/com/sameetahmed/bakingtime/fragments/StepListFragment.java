@@ -68,4 +68,10 @@ public class StepListFragment extends Fragment {
         return view;
     }
 
+    public static StepListFragment newInstance(MyInterface listener) {
+        StepListFragment stepListFragment = new StepListFragment();
+        stepListFragment.mListener = listener;
+        return stepListFragment;
+    }
+
 }

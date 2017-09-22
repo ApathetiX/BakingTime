@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import static com.sameetahmed.bakingtime.ui.StepDetailActivity.STEP_LIST_PARCEL_KEY;
 import static com.sameetahmed.bakingtime.ui.StepDetailActivity.STEP_PARCEL_KEY;
 
-public class StepMasterListActivity extends AppCompatActivity implements MyInterface{
+public class StepMasterListActivity extends AppCompatActivity implements MyInterface {
     private static final String LOG_TAG = StepMasterListActivity.class.getSimpleName();
     private Recipe mRecipe;
     private ArrayList<Step> mStepsList;
@@ -28,6 +28,7 @@ public class StepMasterListActivity extends AppCompatActivity implements MyInter
     private StepDetailFragment mStepDetailFragment;
     private int mStepId;
     private Step mStep;
+    private MyInterface mListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +43,7 @@ public class StepMasterListActivity extends AppCompatActivity implements MyInter
         Bundle bundle = new Bundle();
         bundle.putParcelable(PARCEL_KEY, mRecipe);
 
-        StepListFragment stepListFragment = new StepListFragment();
+        StepListFragment stepListFragment = new StepListFragment().newInstance(this);
         stepListFragment.setArguments(bundle);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
