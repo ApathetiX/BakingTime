@@ -60,12 +60,13 @@ public class StepsListAdapter extends RecyclerView.Adapter<StepsListAdapter.View
             public void onClick(View v) {
                 if (mListener != null) {
                     mListener.handleClick(position);
+                } else {
+                    Step stepParcel = step;
+                    Intent intent = new Intent(mContext, StepDetailActivity.class);
+                    intent.putExtra(PARCEL_KEY, stepParcel);
+                    intent.putParcelableArrayListExtra(STEP_LIST_PARCEL_KEY, mStepList);
+                    mContext.startActivity(intent);
                 }
-                Step stepParcel = step;
-                Intent intent = new Intent(mContext, StepDetailActivity.class);
-                intent.putExtra(PARCEL_KEY, stepParcel);
-                intent.putParcelableArrayListExtra(STEP_LIST_PARCEL_KEY, mStepList);
-                mContext.startActivity(intent);
             }
         });
 
