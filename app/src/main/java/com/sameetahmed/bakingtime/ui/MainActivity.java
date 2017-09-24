@@ -109,7 +109,8 @@ public class MainActivity extends AppCompatActivity {
                         stepsProperties.getInt(getString(R.string.step_id)),
                         stepsProperties.getString(getString(R.string.step_short_desc)),
                         stepsProperties.getString(getString(R.string.step_desc)),
-                        stepsProperties.getString(getString(R.string.step_video))
+                        stepsProperties.getString(getString(R.string.step_video)),
+                        stepsProperties.getString(getString(R.string.thumbnail))
                 );
                 stepList.add(step);
             }

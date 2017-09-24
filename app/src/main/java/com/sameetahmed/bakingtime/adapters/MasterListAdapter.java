@@ -4,6 +4,7 @@ package com.sameetahmed.bakingtime.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -62,27 +63,33 @@ public class MasterListAdapter extends RecyclerView.Adapter<MasterListAdapter.Vi
         holder.mRecipeName.setText(recipe.getName());
         holder.mRecipeServing.setText("Servings: " + Integer.toString(recipe.getServings()));
 
-        switch (position) {
-            case 0:
-                Picasso.with(mContext)
-                        .load(R.drawable.nutella)
-                        .into(holder.mRecipeImage);
-                break;
-            case 1:
-                Picasso.with(mContext)
-                    .load(R.drawable.brownie)
-                    .into(holder.mRecipeImage);
-                break;
-            case 2:
-                Picasso.with(mContext)
-                        .load(R.drawable.yellow_cake)
-                        .into(holder.mRecipeImage);
-                break;
-            case 3:
-                Picasso.with(mContext)
-                        .load(R.drawable.cheesecake)
-                        .into(holder.mRecipeImage);
-                break;
+        String imageUrl = recipe.getImageUrl();
+
+        if (imageUrl != "") {
+            Uri imageUri = Uri.parse(imageUrl).buildUpon().build();
+            holder.mRecipeImage.setImageURI(imageUri);
+        }
+            switch (position) {
+                case 0:
+                    Picasso.with(mContext)
+                            .load(R.drawable.nutella)
+                            .into(holder.mRecipeImage);
+                    break;
+                case 1:
+                    Picasso.with(mContext)
+                            .load(R.drawable.brownie)
+                            .into(holder.mRecipeImage);
+                    break;
+                case 2:
+                    Picasso.with(mContext)
+                            .load(R.drawable.yellow_cake)
+                            .into(holder.mRecipeImage);
+                    break;
+                case 3:
+                    Picasso.with(mContext)
+                            .load(R.drawable.cheesecake)
+                            .into(holder.mRecipeImage);
+                    break;
         }
 
         // When recipe card is clicked, open the detail activity

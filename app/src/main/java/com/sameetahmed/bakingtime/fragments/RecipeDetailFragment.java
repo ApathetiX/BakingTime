@@ -16,10 +16,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sameetahmed.bakingtime.R;
-import com.sameetahmed.bakingtime.ui.StepMasterListActivity;
 import com.sameetahmed.bakingtime.adapters.IngredientsListAdapter;
 import com.sameetahmed.bakingtime.model.Ingredient;
 import com.sameetahmed.bakingtime.model.Recipe;
+import com.sameetahmed.bakingtime.ui.StepMasterListActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -37,6 +37,7 @@ public class RecipeDetailFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         Bundle bundle = getArguments();
 
         if (bundle != null) {

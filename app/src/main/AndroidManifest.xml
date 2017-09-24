@@ -20,11 +20,17 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.RecipeDetailActivity"
-            android:label="Recipe Details">
+            android:label="Recipe Details"
+            android:parentActivityName=".ui.MainActivity"
+            android:launchMode="singleTop">
         </activity>
-        <activity android:name=".ui.StepMasterListActivity">
+        <activity android:name=".ui.StepMasterListActivity"
+            android:label="Steps List"
+            android:parentActivityName=".ui.RecipeDetailActivity">
         </activity>
-        <activity android:name=".ui.StepDetailActivity">
+        <activity android:name=".ui.StepDetailActivity"
+            android:label="Step Details"
+            android:parentActivityName=".ui.StepMasterListActivity">
         </activity>
 
         <receiver android:name=".widget.RecipeWidget">

@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
+    android:tag="tablet_mode"
     tools:context="com.sameetahmed.bakingtime.ui.StepMasterListActivity">
 
     <FrameLayout

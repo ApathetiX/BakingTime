@@ -12,8 +12,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayer;
@@ -29,6 +31,7 @@ import com.google.android.exoplayer2.source.TrackGroupArray;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 import com.google.android.exoplayer2.trackselection.TrackSelector;
+import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
@@ -38,7 +41,7 @@ import com.sameetahmed.bakingtime.model.Step;
 import java.util.ArrayList;
 
 
-public class StepDetailFragment extends Fragment implements ExoPlayer.EventListener{
+public class StepDetailFragment extends Fragment implements ExoPlayer.EventListener {
     private static final String LOG_TAG = StepDetailFragment.class.getSimpleName();
     private Step mStep;
     private ArrayList<Step> mStepsList;
@@ -53,6 +56,7 @@ public class StepDetailFragment extends Fragment implements ExoPlayer.EventListe
     private TextView mDescription;
     private static final String SAVE_STATE_KEY = "saveKey";
     private Bundle mBundle;
+    private long playerPosition;
 
     @Nullable
     @Override
@@ -60,6 +64,7 @@ public class StepDetailFragment extends Fragment implements ExoPlayer.EventListe
 
         if (savedInstanceState != null) {
             mBundle = savedInstanceState.getBundle(SAVE_STATE_KEY);
+            playerPosition = savedInstanceState.getLong("PLAYER_STATE", C.TIME_UNSET);
         }
 
         mBundle = getArguments();
@@ -92,8 +97,19 @@ public class StepDetailFragment extends Fragment implements ExoPlayer.EventListe
             mNextStep.setVisibility(View.INVISIBLE);
         }
 
+        if (view.findViewWithTag("tablet_mode") != null) {
+            mPlayerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIXED_WIDTH);
+        }
+        String stepImage = mStep.getImage();
+        if (stepImage != "") {
+            ImageView placeholder = view.findViewById(R.id.placeholder_image);
+            placeholder.setVisibility(View.VISIBLE);
+            Uri stepImageUri = Uri.parse(stepImage).buildUpon().build();
+            placeholder.setImageURI(stepImageUri);
+        }
+
         mPlayerView.setDefaultArtwork(BitmapFactory.decodeResource(
-                getResources(), R.drawable.question_mark));
+                    getResources(), R.drawable.question_mark));
 
         mDescription.setText(mStep.getDesc());
 
@@ -156,6 +172,8 @@ public class StepDetailFragment extends Fragment implements ExoPlayer.EventListe
             MediaSource mediaSource = new ExtractorMediaSource(mediaUri, new DefaultDataSourceFactory(
                     getActivity(), userAgent), new DefaultExtractorsFactory(), null, null);
 
+            if (playerPosition != C.TIME_UNSET) mExoPlayer.seekTo(playerPosition);
+
             mExoPlayer.prepare(mediaSource);
             mExoPlayer.setPlayWhenReady(false);
         }
@@ -193,10 +211,10 @@ public class StepDetailFragment extends Fragment implements ExoPlayer.EventListe
 
     @Override
     public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
-        if((playbackState == ExoPlayer.STATE_READY) && playWhenReady){
+        if ((playbackState == ExoPlayer.STATE_READY) && playWhenReady) {
             mStateBuilder.setState(PlaybackStateCompat.STATE_PLAYING,
                     mExoPlayer.getCurrentPosition(), 1f);
-        } else if((playbackState == ExoPlayer.STATE_READY)){
+        } else if ((playbackState == ExoPlayer.STATE_READY)) {
             mStateBuilder.setState(PlaybackStateCompat.STATE_PAUSED,
                     mExoPlayer.getCurrentPosition(), 1f);
         }
@@ -245,5 +263,7 @@ public class StepDetailFragment extends Fragment implements ExoPlayer.EventListe
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBundle(SAVE_STATE_KEY, mBundle);
+        playerPosition = mExoPlayer.getCurrentPosition();
+        outState.putLong("PLAYER_STATE", playerPosition);
     }
 }
