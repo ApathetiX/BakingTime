@@ -42,7 +42,7 @@ public class RecipeDetailFragment extends Fragment {
         if (bundle != null) {
             mRecipe = bundle.getParcelable(PARCEL_KEY); // Get's the recipe details for this recipe
         } else {
-            Log.i(LOG_TAG, "Couldn't get the recipe details :(");
+            Log.i(LOG_TAG, getString(R.string.failed_recipe_detail));
         }
 
         // Stores the ingredients of the current recipe in the ingredients list
@@ -76,8 +76,8 @@ public class RecipeDetailFragment extends Fragment {
         TextView servings = (TextView) view.findViewById(R.id.tv_servings);
 
         recipeName.setText(mRecipe.getName());
-        numOfIngredients.setText("# of Ingredients: " + mIngredients.size());
-        servings.setText("Serves: " + mRecipe.getServings());
+        numOfIngredients.setText(getString(R.string.num_ingredients) + mIngredients.size());
+        servings.setText(getString(R.string.serves) + mRecipe.getServings());
 
         Button viewDirections = (Button) view.findViewById(R.id.button_view_directions);
 

@@ -37,7 +37,7 @@ public class StepListFragment extends Fragment {
         if (bundle != null) {
             mRecipe = bundle.getParcelable(PARCEL_KEY); // Get's the recipe details for this recipe
         } else {
-            Log.i(LOG_TAG, "Couldn't get the recipe details :(");
+            Log.i(LOG_TAG, getString(R.string.failed_recipe_detail));
         }
 
         mStepList = mRecipe.getStepsList(); // Stores the list of steps in the steps list

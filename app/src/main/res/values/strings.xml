@@ -5,4 +5,25 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+    <string name="failed_api">Failed to connect to the API</string>
+    <string name="success_api">Successfully connected to the API!</string>
+    <string name="no_internet">No internet connection available :(</string>
+    <string name="ingredients">ingredients</string>
+    <string name="quantity">quantity</string>
+    <string name="measure">measure</string>
+    <string name="ingredient">ingredient</string>
+    <string name="recipe_id">id</string>
+    <string name="recipe_name">name</string>
+    <string name="recipe_image">image</string>
+    <string name="recipe_servings">servings</string>
+    <string name="steps">steps</string>
+    <string name="step_id">id</string>
+    <string name="step_short_desc">shortDescription</string>
+    <string name="step_desc">description</string>
+    <string name="step_video">videoURL</string>
+    <string name="failed_recipe_data">Failed to get the recipe data</string>
+    <string name="failed_recipe_detail">Couldn\'t get the recipe details :(</string>
+    <string name="num_ingredients"># of Ingredients:</string>
+    <string name="serves">Serves:</string>
+    <string name="failed_step_data">Failed to get the step data</string>
 </resources>

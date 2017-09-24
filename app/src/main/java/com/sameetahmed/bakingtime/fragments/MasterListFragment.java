@@ -26,7 +26,6 @@ public class MasterListFragment extends android.support.v4.app.Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -34,7 +33,7 @@ public class MasterListFragment extends android.support.v4.app.Fragment {
         if (bundle != null) {
             mRecipeList = bundle.getParcelableArrayList(PARCEL_KEY);
         } else {
-            Log.i(LOG_TAG, "Failed to get the recipe data");
+            Log.i(LOG_TAG, getString(R.string.failed_recipe_data));
         }
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_master_list_recipe, container, false);

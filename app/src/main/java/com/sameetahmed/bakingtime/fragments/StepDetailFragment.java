@@ -67,7 +67,7 @@ public class StepDetailFragment extends Fragment implements ExoPlayer.EventListe
             mStep = mBundle.getParcelable(STEP_PARCEL_KEY);
             mStepsList = mBundle.getParcelableArrayList(STEP_LIST_PARCEL_KEY);
         } else {
-            Log.i(LOG_TAG, "Failed to get the step data");
+            Log.i(LOG_TAG, getString(R.string.failed_step_data));
         }
 
         View view = inflater.inflate(R.layout.fragment_step_detail, container, false);
@@ -152,7 +152,7 @@ public class StepDetailFragment extends Fragment implements ExoPlayer.EventListe
             mExoPlayer = ExoPlayerFactory.newSimpleInstance(getActivity(), trackSelector, loadControl);
             mPlayerView.setPlayer(mExoPlayer);
 
-            String userAgent = Util.getUserAgent(getActivity(), "BakingTime");
+            String userAgent = Util.getUserAgent(getActivity(), getString(R.string.app_name));
             MediaSource mediaSource = new ExtractorMediaSource(mediaUri, new DefaultDataSourceFactory(
                     getActivity(), userAgent), new DefaultExtractorsFactory(), null, null);
 
