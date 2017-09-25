@@ -64,7 +64,6 @@ public class StepDetailFragment extends Fragment implements ExoPlayer.EventListe
 
         if (savedInstanceState != null) {
             mBundle = savedInstanceState.getBundle(SAVE_STATE_KEY);
-            playerPosition = savedInstanceState.getLong("PLAYER_STATE", C.TIME_UNSET);
         }
 
         mBundle = getArguments();
@@ -120,6 +119,8 @@ public class StepDetailFragment extends Fragment implements ExoPlayer.EventListe
         if (!(videoUri.equals(""))) {
             initializePlayer(videoUri);
         }
+
+        playerPosition = savedInstanceState.getLong("PLAYER_STATE", C.TIME_UNSET);
 
         return view;
     }
