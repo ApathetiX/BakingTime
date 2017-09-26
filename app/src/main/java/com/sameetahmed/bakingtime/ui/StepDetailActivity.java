@@ -38,27 +38,28 @@ public class StepDetailActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-
-        if (savedInstanceState != null) {
+        if (savedInstanceState == null) {
+            mStepDetailFragment = new StepDetailFragment();
+        } else {
             mBundle = savedInstanceState.getBundle(SAVE_STATE_KEY);
             mStep = savedInstanceState.getParcelable(STEP_PARCEL_KEY);
             mStepsList = savedInstanceState.getParcelableArrayList(STEP_LIST_PARCEL_KEY);
             mStepId = savedInstanceState.getInt(STEP_ID_PARCEL_KEY);
-            createFragment();
-
-        } else {
-            mBundle = new Bundle();
-
-            Intent intent = getIntent();
-            if (intent != null) {
-                mStep = intent.getParcelableExtra(STEP_PARCEL_KEY); // Get's the Step from the Adapter
-                mStepsList = intent.getParcelableArrayListExtra(STEP_LIST_PARCEL_KEY); // Get's the steps list
-            }
-
-            mStepId = mStep.getId();
-
-            createFragment();
+            mStepDetailFragment = (StepDetailFragment) getSupportFragmentManager().getFragment(savedInstanceState, "MY_FRAGMENT");
         }
+
+        mBundle = new Bundle();
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            mStep = intent.getParcelableExtra(STEP_PARCEL_KEY); // Get's the Step from the Adapter
+            mStepsList = intent.getParcelableArrayListExtra(STEP_LIST_PARCEL_KEY); // Get's the steps list
+        }
+
+        mStepId = mStep.getId();
+
+        createFragment();
+
     }
 
     private void createFragment() {
@@ -104,6 +105,7 @@ public class StepDetailActivity extends AppCompatActivity {
         outState.putParcelable(STEP_PARCEL_KEY, mStep);
         outState.putParcelableArrayList(STEP_LIST_PARCEL_KEY, mStepsList);
         outState.putInt(STEP_ID_PARCEL_KEY, mStepId);
+        getSupportFragmentManager().putFragment(outState, "MY_FRAGMENT", mStepDetailFragment);
 
     }
 }
