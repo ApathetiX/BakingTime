@@ -109,7 +109,7 @@ public class StepDetailFragment extends Fragment implements ExoPlayer.EventListe
         }
 
         mPlayerView.setDefaultArtwork(BitmapFactory.decodeResource(
-                    getResources(), R.drawable.question_mark));
+                getResources(), R.drawable.question_mark));
 
         mDescription.setText(mStep.getDesc());
 
@@ -117,12 +117,18 @@ public class StepDetailFragment extends Fragment implements ExoPlayer.EventListe
 
         initializeMediaSession();
 
+        TrackSelector trackSelector = new DefaultTrackSelector();
+        LoadControl loadControl = new DefaultLoadControl();
+        mExoPlayer = ExoPlayerFactory.newSimpleInstance(getActivity(), trackSelector, loadControl);
+
+
+//        playerPosition = C.TIME_UNSET;
+//        if (savedInstanceState != null) {
+//            playerPosition = savedInstanceState.getLong("PLAYER_STATE", C.TIME_UNSET);
+//        }
+
         if (!(videoUri.equals(""))) {
             initializePlayer(videoUri);
-        }
-        playerPosition = C.TIME_UNSET;
-        if (savedInstanceState != null) {
-            playerPosition = savedInstanceState.getLong("PLAYER_STATE", C.TIME_UNSET);
         }
 
         setRetainInstance(true);
@@ -168,21 +174,20 @@ public class StepDetailFragment extends Fragment implements ExoPlayer.EventListe
     }
 
     private void initializePlayer(Uri mediaUri) {
-        if (mExoPlayer == null) {
-            TrackSelector trackSelector = new DefaultTrackSelector();
-            LoadControl loadControl = new DefaultLoadControl();
-            mExoPlayer = ExoPlayerFactory.newSimpleInstance(getActivity(), trackSelector, loadControl);
-            mPlayerView.setPlayer(mExoPlayer);
+//        if (mExoPlayer == null) {
+//            TrackSelector trackSelector = new DefaultTrackSelector();
+//            LoadControl loadControl = new DefaultLoadControl();
+//            mExoPlayer = ExoPlayerFactory.newSimpleInstance(getActivity(), trackSelector, loadControl);
+        mPlayerView.setPlayer(mExoPlayer);
 
-            String userAgent = Util.getUserAgent(getActivity(), getString(R.string.app_name));
-            MediaSource mediaSource = new ExtractorMediaSource(mediaUri, new DefaultDataSourceFactory(
-                    getActivity(), userAgent), new DefaultExtractorsFactory(), null, null);
+        String userAgent = Util.getUserAgent(getActivity(), getString(R.string.app_name));
+        MediaSource mediaSource = new ExtractorMediaSource(mediaUri, new DefaultDataSourceFactory(
+                getActivity(), userAgent), new DefaultExtractorsFactory(), null, null);
 
-            if (playerPosition != C.TIME_UNSET) mExoPlayer.seekTo(playerPosition);
-
-            mExoPlayer.prepare(mediaSource);
-            mExoPlayer.setPlayWhenReady(false);
-        }
+        mExoPlayer.prepare(mediaSource);
+        mExoPlayer.setPlayWhenReady(true);
+        if (playerPosition != C.TIME_UNSET) mExoPlayer.seekTo(playerPosition);
+//        }
     }
 
     private void releasePlayer() {
@@ -273,7 +278,6 @@ public class StepDetailFragment extends Fragment implements ExoPlayer.EventListe
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBundle(SAVE_STATE_KEY, mBundle);
-        playerPosition = mExoPlayer.getCurrentPosition();
         outState.putLong("PLAYER_STATE", playerPosition);
     }
 }
