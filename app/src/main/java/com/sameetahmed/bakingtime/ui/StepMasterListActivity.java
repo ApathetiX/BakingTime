@@ -51,35 +51,38 @@ public class StepMasterListActivity extends AppCompatActivity implements MyInter
         Bundle bundle = new Bundle();
         bundle.putParcelable(PARCEL_KEY, mRecipe);
 
-        mStepListFragment = new StepListFragment();
-        mStepListFragment.setArguments(bundle);
+        if (savedInstanceState == null) {
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .add(R.id.master_step_list_container, mStepListFragment)
-                .commit();
-
-        if(findViewById(R.id.step_detail_container)!= null){
-            mTabletMode = true;
-            mStepListFragment = new StepListFragment().newInstance(this);
+            mStepListFragment = new StepListFragment();
             mStepListFragment.setArguments(bundle);
 
-            fragmentManager = getSupportFragmentManager();
+            FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction()
-                    .replace(R.id.master_step_list_container, mStepListFragment)
+                    .add(R.id.master_step_list_container, mStepListFragment)
                     .commit();
 
-            mStepDetailFragment = new StepDetailFragment();
-            Bundle args = new Bundle();
-            mStepsList = mRecipe.getStepsList();
-            mStep = mStepsList.get(0);
-            mStepId = mStep.getId();
+            if (findViewById(R.id.step_detail_container) != null) {
+                mTabletMode = true;
+                mStepListFragment = new StepListFragment().newInstance(this);
+                mStepListFragment.setArguments(bundle);
 
-            args.putParcelableArrayList(STEP_LIST_PARCEL_KEY, mStepsList);
-            args.putParcelable(STEP_PARCEL_KEY, mStep);
-            mStepDetailFragment.setArguments(args);
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.step_detail_container, mStepDetailFragment).commit();
+                fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction()
+                        .add(R.id.master_step_list_container, mStepListFragment)
+                        .commit();
+
+                mStepDetailFragment = new StepDetailFragment();
+                Bundle args = new Bundle();
+                mStepsList = mRecipe.getStepsList();
+                mStep = mStepsList.get(0);
+                mStepId = mStep.getId();
+
+                args.putParcelableArrayList(STEP_LIST_PARCEL_KEY, mStepsList);
+                args.putParcelable(STEP_PARCEL_KEY, mStep);
+                mStepDetailFragment.setArguments(args);
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.step_detail_container, mStepDetailFragment).commit();
+            }
         }
     }
 
