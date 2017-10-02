@@ -58,7 +58,9 @@ public class StepDetailActivity extends AppCompatActivity {
 
         mStepId = mStep.getId();
 
-        createFragment();
+        if (savedInstanceState == null) {
+            createFragment();
+        }
 
     }
 
