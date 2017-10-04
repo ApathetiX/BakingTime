@@ -68,7 +68,7 @@ public class StepMasterListActivity extends AppCompatActivity implements MyInter
 
                 fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction()
-                        .add(R.id.master_step_list_container, mStepListFragment)
+                        .replace(R.id.master_step_list_container, mStepListFragment)
                         .commit();
 
                 mStepDetailFragment = new StepDetailFragment();

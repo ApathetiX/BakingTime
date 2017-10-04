@@ -19,6 +19,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
             android:text="Recipe Name"
+            android:background="@color/cardview_light_background"
             android:textAppearance="?android:attr/textAppearanceLarge"/>
 
         <ListView
